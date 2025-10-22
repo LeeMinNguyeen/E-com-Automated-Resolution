@@ -3,3 +3,6 @@ uvicorn
 python-dotenv
 requests
 groq
+pymongo
+pywa
+pywa[fastapi]
