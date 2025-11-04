@@ -1,0 +1,14 @@
+{
+    "intent_labels": {
+        "provide_feedback_on_service": 0,
+        "report_order_content_issue": 1,
+        "generic_unspecified_feedback": 2,
+        "comment_on_platform_experience": 3,
+        "comment_on_product_quality": 4
+    },
+    "sentiment_labels": {
+        "positive": 0,
+        "negative": 1,
+        "neutral": 2
+    }
+}
