@@ -18,6 +18,8 @@ This project implements an end-to-end AI-powered customer service agent that han
 - 💰 **Smart Refund Processing**: Intelligent refund handling with automatic order lookup and confirmation
 - 🔍 **Auto Order ID Detection**: Automatic extraction of order IDs from messages (pattern: ORD000001)
 - 📊 **Intent-Driven Responses**: LLM receives NLU intent/sentiment to make informed decisions
+- 🚨 **Human Escalation**: Intelligent routing to support agents for complex issues
+- 📈 **Real-time Dashboard**: Monitor chatbot performance, manage alerts, track metrics
 
 ## 📋 Table of Contents
 
@@ -29,6 +31,7 @@ This project implements an end-to-end AI-powered customer service agent that han
 - [Project Structure](#project-structure)
 - [Components](#components)
 - [Available Tools](#available-tools)
+- [Customer Support Dashboard](#customer-support-dashboard)
 - [Testing](#testing)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
@@ -36,23 +39,31 @@ This project implements an end-to-end AI-powered customer service agent that han
 ## 🏗️ Architecture
 
 ```
-┌─────────────┐     ┌──────────────┐     ┌─────────────────┐
+┌─────────────┐      ┌──────────────┐     ┌─────────────────┐
 │   WhatsApp  │────▶│  FastAPI Bot │────▶│  Groq LLM       │
 │   Business  │◀────│  (PyWa)      │◀────│  (w/ Tools)     │
-└─────────────┘     └──────────────┘     └────────┬────────┘
+└─────────────┘      └──────────────┘     └────────┬────────┘
                             │                      │
                             ▼                      ▼
                     ┌──────────────┐     ┌─────────────────┐
-                    │   MongoDB    │     │   MCP Client    │
-                    │  (Chat + DB) │     └────────┬────────┘
-                    └──────────────┘              │
-                                                  ▼
-                                        ┌─────────────────┐
-                                        │   MCP Server    │
-                                        │   - NLU Model   │
-                                        │   - Order DB    │
-                                        │   - Refunds     │
-                                        └─────────────────┘
+                    │   MongoDB    │────▶│ Streamlit       │
+                    │  (Chat + DB) │     │ Dashboard       │
+                    └──────────────┘     └─────────────────┘
+                            ▲                      
+                            │                      
+                            ▼                      
+                    ┌─────────────────┐
+                    │   MCP Client    │
+                    └────────┬────────┘
+                             │
+                             ▼
+                   ┌─────────────────┐
+                   │   MCP Server    │
+                   │   - NLU Model   │
+                   │   - Order DB    │
+                   │   - Refunds     │
+                   │   - Alerts      │
+                   └─────────────────┘
 ```
 
 ### System Flow
@@ -73,7 +84,9 @@ This project implements an end-to-end AI-powered customer service agent that han
    - `smart_triage_nlu`: Re-analyzes if user switches topics
    - `query_order_database`: Fetches order details from MongoDB
    - `process_refund`: Handles refund processing
+   - `request_human_intervention`: Escalates to human agents
 7. **Bot sends response** back to user via WhatsApp
+8. **Dashboard** monitors performance and displays alerts in real-time
 
 ## 📦 Prerequisites
 
@@ -133,6 +146,7 @@ pip install -r requirements.txt
 3. Create collections:
    - `order_details`: For order information
    - `chats`: For conversation history
+   - `human_intervention_alerts`: For escalation alerts
 
 ## ⚙️ Configuration
 
@@ -215,46 +229,6 @@ Copy the HTTPS URL (e.g., `https://abc123.ngrok-free.app`) and update:
 1. Your WhatsApp app webhook URL
 2. The `callback_url` in `api/main.py`
 
-### Testing Without WhatsApp
-
-Use the simulation script to test conversational flows without needing WhatsApp:
-
-```bash
-# Interactive mode - type your own messages
-python scripts/simulate_whatsapp.py
-
-# Run all test scenarios
-python scripts/simulate_whatsapp.py --scenario all
-
-# Specific scenarios
-python scripts/simulate_whatsapp.py --scenario order      # Order lookup flow
-python scripts/simulate_whatsapp.py --scenario refund     # Refund request flow
-python scripts/simulate_whatsapp.py --scenario complaint  # Delivery complaint
-python scripts/simulate_whatsapp.py --scenario vague      # Unclear request
-python scripts/simulate_whatsapp.py --scenario multi      # Multiple orders
-```
-
-**Interactive Mode Commands:**
-- Type messages normally to chat with the bot
-- `context` - View current conversation state
-- `clear` - Reset conversation history
-- `quit` - Exit
-
-**Features:**
-- ✅ Auto-clears previous chat history before each test
-- ✅ Shows NLU analysis results (intent + sentiment)
-- ✅ Displays tool calls and their results
-- ✅ Tracks conversation context
-- ✅ Simulates realistic delays
-
-### Testing MCP Integration
-
-Test individual MCP tools:
-
-```bash
-python scripts/test_mcp_integration.py
-```
-
 ## 📁 Project Structure
 
 ```
@@ -274,6 +248,10 @@ E-com-Automated-Resolution/
 │   │   └── client.py                    # MCP client implementation
 │   └── mcp_server/
 │       └── mcp_server.py                # MCP server with tools
+├── dashboard/                            # Customer support dashboard
+│   ├── app.py                           # Streamlit dashboard app
+│   ├── db_analytics.py                  # Analytics functions
+│   └── requirements.txt                 # Dashboard dependencies
 ├── data/
 │   ├── Ecommerce_Delivery_Analytics_New.csv
 │   └── nlu_training_data.csv
@@ -441,6 +419,113 @@ Processes refund requests (simulated in this version).
 }
 ```
 
+### 4. `request_human_intervention`
+
+Escalates complex issues to human customer support agents.
+
+**When It's Called:**
+- Customer explicitly asks to speak with a human
+- Very frustrated customers (negative sentiment >90%)
+- Issues outside automation scope
+- Complex disputes requiring manual investigation
+- Repeated resolution failures
+
+**Input:**
+```json
+{
+  "user_id": "1234567890",
+  "reason": "Customer extremely frustrated with prolonged unresolved issue",
+  "last_message": "This is unacceptable! I've been waiting for 2 weeks!",
+  "priority": "high"
+}
+```
+
+**Output:**
+```json
+{
+  "status": "success",
+  "alert_id": "677ad14c123456789abcdef0",
+  "message": "Alert created and support team notified"
+}
+```
+
+**Priority Levels:**
+- `high`: Very frustrated customers, urgent issues
+- `medium`: Standard complex issues, human requests
+- `low`: General inquiries needing expertise
+
+## 📊 Customer Support Dashboard
+
+A real-time Streamlit dashboard for monitoring chatbot performance and managing human intervention alerts.
+
+### Dashboard Features
+
+#### 📈 Overview Tab
+- **Key Metrics**: Users served, average response time, intervention rate, auto-resolution rate
+- **Visual Analytics**:
+  - Intent distribution (pie chart)
+  - Service ratings (bar chart)
+  - Response time trends (line chart)
+- **Refund Statistics**: Total refunds processed and amounts
+
+#### 🚨 Alerts Tab
+- Real-time human intervention alerts
+- Priority-based filtering (high/medium/low)
+- Alert details: user ID, reason, timestamp, last message
+- One-click resolve functionality
+- Status tracking (pending/resolved)
+
+#### 📊 Analytics Tab
+- **Order Analytics**: Delivery delays, average order value
+- **Platform Distribution**: Order breakdown by platform
+- **Category Distribution**: Popular product categories
+- **Refund Analysis**: Refund reasons and category breakdown
+
+#### 💬 Conversations Tab
+- Recent chat history with search
+- User message tracking
+- Conversation timeline
+
+### Running the Dashboard
+
+#### 1. Install Dashboard Dependencies
+
+```bash
+cd dashboard
+pip install -r requirements.txt
+```
+
+#### 2. Start the Dashboard
+
+```bash
+streamlit run app.py
+```
+
+The dashboard will open in your browser at `http://localhost:8501`
+
+#### 3. Dashboard Configuration
+
+The dashboard automatically connects to your MongoDB instance using the credentials from your `.env` file. Make sure:
+- MongoDB is accessible
+- Collections exist: `order_details`, `chats`, `human_intervention_alerts`
+- Data is populated (run `scripts/push_csv_to_mongo.py` if needed)
+
+### Dashboard Features
+
+- **Auto-refresh**: Updates every 30 seconds
+- **Time Range Filters**: View data for last 24h, 7 days, or 30 days
+- **Real-time Alerts**: See escalations as they happen
+- **Interactive Charts**: Hover for detailed information
+- **Resolve Alerts**: Mark alerts as resolved directly from dashboard
+
+### Monitoring Best Practices
+
+1. **Check alerts regularly**: Address pending interventions promptly
+2. **Monitor response times**: Ensure bot is performing efficiently
+3. **Track resolution rates**: High auto-resolution indicates good automation
+4. **Review refund patterns**: Identify common issues for proactive improvement
+5. **Analyze intent distribution**: Understand customer needs and bot usage
+
 ## 🧪 Testing
 
 ### Unit Tests
@@ -509,87 +594,6 @@ Send messages to your WhatsApp Business number:
    Bot: Our return policy allows returns within 30 days...
    ```
 
-## 🐛 Troubleshooting
-
-### MCP Server Won't Start
-
-**Symptoms:** Connection errors, model loading failures
-
-**Solutions:**
-1. Verify all model files exist in `model/` directory
-2. Check MongoDB connection string in `.env`
-3. Ensure PyTorch is installed correctly: `python -c "import torch; print(torch.__version__)"`
-4. Check Python version: `python --version` (must be 3.8+)
-5. Fix import paths: Ensure `api/mcp_server/mcp_server.py` can import from project root
-
-### NLU Analysis Running Too Often
-
-**Expected Behavior:** NLU should only run on:
-- First message from user
-- Messages after 24+ hour gap
-- Topic switches (when LLM explicitly calls `smart_triage_nlu`)
-
-**Check:**
-```bash
-# Look for these log messages:
-# "Running NLU analysis on user message (first message or 24h+ gap)..."  ✅
-# "Using cached NLU result - Intent: ..."  ✅ (most follow-up messages)
-```
-
-### Bot Not Responding
-
-**Symptoms:** Messages sent but no reply
-
-**Solutions:**
-1. Check bot is running: `curl http://localhost:8000`
-2. Verify webhook URL in WhatsApp app settings
-3. Check ngrok is running and URL matches callback_url
-4. Review terminal logs for errors
-5. Verify Groq API key has credits
-6. Check model compatibility: Ensure using `moonshotai/kimi-k2-instruct-0905`
-
-### Tools Not Being Called
-
-**Symptoms:** Bot responds without using tools, doesn't query database
-
-**Solutions:**
-1. Verify MCP server is running in separate terminal
-2. Check Groq API key is valid and has credits
-3. Ensure using correct model: `moonshotai/kimi-k2-instruct-0905` (not llama-3.3)
-4. Review logs for "LLM requested X tool calls" messages
-5. Test MCP integration: `python scripts/test_mcp_integration.py`
-6. Check MCP client connection: Look for "Successfully connected to MCP server"
-
-### "reasoning is not supported" Error
-
-**Solution:** You're using the wrong model. Update to:
-```python
-# In api/llm/groq_model.py
-model="moonshotai/kimi-k2-instruct-0905"  # ✅ Correct
-# Not: model="llama-3.3-70b-versatile"   # ❌ Wrong
-```
-
-### Order Not Found
-
-**Symptoms:** "Order ID not found" errors
-
-**Solutions:**
-1. Run database setup: `python scripts/push_csv_to_mongo.py`
-2. Verify MongoDB connection
-3. Check collection name: `order_details`
-4. Verify order ID format: `ORD######`
-5. Test MongoDB connection: `python -c "from api.db.mongo import get_mongo_client; print(get_mongo_client())"`
-
-### Model Inference Slow
-
-**Symptoms:** Delayed responses, high latency
-
-**Solutions:**
-1. Install CUDA version of PyTorch for GPU acceleration
-2. Verify GPU is being used: Check MCP server logs for device info
-3. Reduce batch size if memory issues
-4. Consider model quantization for production
-
 ## 📊 Performance Metrics
 
 - **NLU Model Accuracy**: ~90%+ on test set
@@ -598,33 +602,6 @@ model="moonshotai/kimi-k2-instruct-0905"  # ✅ Correct
 - **Response Time**: <2 seconds (with GPU)
 - **Tool Call Success Rate**: ~95%
 
-## 🔮 Future Enhancements
-
-- [ ] Multi-language support (Hindi, Spanish, etc.)
-- [ ] Voice message handling
-- [ ] Product recommendation system
-- [ ] Order tracking integration
-- [ ] FAQ knowledge base with RAG
-- [ ] Analytics dashboard
-- [ ] A/B testing framework
-- [ ] Production monitoring and logging
-- [ ] Rate limiting and security hardening
-- [ ] Auto-scaling for high traffic
-
-## 📝 License
-
-This project is part of an academic research project. Please refer to your institution's guidelines for usage and distribution.
-
-## 🤝 Contributing
-
-This is an academic project. For questions or suggestions, please open an issue on GitHub.
-
-## 📧 Contact
-
-**Author**: LeeMinNguyeen  
-**Repository**: [E-com-Automated-Resolution](https://github.com/LeeMinNguyeen/E-com-Automated-Resolution)
-
----
 
 ## 🙏 Acknowledgments
 
@@ -635,7 +612,3 @@ This is an academic project. For questions or suggestions, please open an issue 
 - **MongoDB** for database services
 
 ---
-
-**For detailed developer information, see [GUIDE.md](GUIDE.md)**
-
-**Built with ❤️ using Python, PyTorch, and AI**

@@ -230,6 +230,36 @@ def scenario_multi_order_check(sim: WhatsAppSimulator):
     sim.show_context()
 
 
+def scenario_human_intervention_explicit(sim: WhatsAppSimulator):
+    """Test scenario: User explicitly asks for human agent."""
+    print("\n" + "🎬 SCENARIO 8: Human Intervention - Explicit Request" + "\n")
+    
+    sim.send_message("I want to speak with a human agent")
+    time.sleep(1)
+    
+    sim.show_context()
+
+
+def scenario_human_intervention_frustrated(sim: WhatsAppSimulator):
+    """Test scenario: Very frustrated customer needing human attention."""
+    print("\n" + "🎬 SCENARIO 9: Human Intervention - Frustrated Customer" + "\n")
+    
+    sim.send_message("This is absolutely unacceptable! I've been waiting for weeks and nobody has helped me!")
+    time.sleep(1)
+    
+    sim.show_context()
+
+
+def scenario_human_intervention_complex(sim: WhatsAppSimulator):
+    """Test scenario: Complex issue beyond automation scope."""
+    print("\n" + "🎬 SCENARIO 10: Human Intervention - Complex Issue" + "\n")
+    
+    sim.send_message("I need to update my billing address and modify my payment method for an existing order")
+    time.sleep(1)
+    
+    sim.show_context()
+
+
 def interactive_mode(sim: WhatsAppSimulator):
     """Interactive mode - user can type messages."""
     print("\n" + "🎮 INTERACTIVE MODE" + "\n")
@@ -278,6 +308,9 @@ def run_all_scenarios(sim: WhatsAppSimulator):
         scenario_vague_request,
         scenario_general_inquiry,
         scenario_multi_order_check,
+        scenario_human_intervention_explicit,
+        scenario_human_intervention_frustrated,
+        scenario_human_intervention_complex,
     ]
     
     for i, scenario in enumerate(scenarios, 1):
@@ -300,7 +333,7 @@ def main():
     parser = argparse.ArgumentParser(description="WhatsApp Bot Simulator")
     parser.add_argument(
         '--scenario',
-        choices=['all', 'order', 'refund', 'complaint', 'vague', 'general', 'multi', 'interactive'],
+        choices=['all', 'order', 'refund', 'complaint', 'vague', 'general', 'multi', 'human', 'frustrated', 'complex', 'interactive'],
         default='interactive',
         help='Scenario to run (default: interactive)'
     )
@@ -336,6 +369,12 @@ def main():
         scenario_general_inquiry(sim)
     elif args.scenario == 'multi':
         scenario_multi_order_check(sim)
+    elif args.scenario == 'human':
+        scenario_human_intervention_explicit(sim)
+    elif args.scenario == 'frustrated':
+        scenario_human_intervention_frustrated(sim)
+    elif args.scenario == 'complex':
+        scenario_human_intervention_complex(sim)
     elif args.scenario == 'interactive':
         interactive_mode(sim)
     

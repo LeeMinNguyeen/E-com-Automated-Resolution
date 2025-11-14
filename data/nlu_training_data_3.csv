@@ -1,0 +1,451 @@
+text,intent,sentiment
+Where is my order?,track_order,neutral
+Can you check my order status?,track_order,neutral
+I need to track my package,track_order,neutral
+What's the status of my delivery?,track_order,neutral
+When will my order arrive?,track_order,neutral
+Track my order please,track_order,neutral
+Where is my package?,track_order,neutral
+Can I get an update on my order?,track_order,neutral
+I want to know where my order is,track_order,neutral
+Please check the status of my shipment,track_order,neutral
+What's happening with my delivery?,track_order,neutral
+I need an update on my package,track_order,neutral
+Can you tell me where my order is?,track_order,neutral
+Order tracking please,track_order,neutral
+Status of my delivery?,track_order,neutral
+I'd like to track my order,track_order,neutral
+Where's my delivery?,track_order,neutral
+Can you locate my package?,track_order,neutral
+I need to know my order status,track_order,neutral
+Please track order,track_order,neutral
+Check my delivery status,track_order,neutral
+Where is order?,track_order,neutral
+Track package,track_order,neutral
+Order status?,track_order,neutral
+My order hasn't arrived yet,track_order,neutral
+Still waiting for my package,track_order,neutral
+Has my order shipped?,track_order,neutral
+Is my package on the way?,track_order,neutral
+When should I expect my delivery?,track_order,neutral
+Estimated delivery time?,track_order,neutral
+Where is my order? It should have arrived by now,track_order,negative
+My package still hasn't arrived what's happening?,track_order,negative
+Still no sign of my order,track_order,negative
+I'm worried about my order,track_order,negative
+Getting concerned about my package,track_order,negative
+My order is very late,report_delivery_delay,negative
+The delivery is delayed and I'm frustrated,report_delivery_delay,negative
+Why hasn't my package arrived yet? It's been a week!,report_delivery_delay,negative
+This is taking way too long where is my order?,report_delivery_delay,negative
+I'm very upset about the late delivery,report_delivery_delay,negative
+Extremely disappointed with the delivery time,report_delivery_delay,negative
+My order should have been here days ago,report_delivery_delay,negative
+The package is very late,report_delivery_delay,negative
+Delivery is taking forever,report_delivery_delay,negative
+This delay is unacceptable,report_delivery_delay,negative
+Why is my order so delayed?,report_delivery_delay,negative
+My delivery is overdue,report_delivery_delay,negative
+Package is late again,report_delivery_delay,negative
+Another delayed delivery,report_delivery_delay,negative
+When will this finally arrive?,report_delivery_delay,negative
+The estimated delivery date has passed,report_delivery_delay,negative
+My order is past the delivery window,report_delivery_delay,negative
+Still waiting and it's already late,report_delivery_delay,negative
+Delivery delay is frustrating,report_delivery_delay,negative
+This is the third delay,report_delivery_delay,negative
+Not happy with the late delivery,report_delivery_delay,negative
+My package is overdue by several days,report_delivery_delay,negative
+The delivery date keeps getting pushed back,report_delivery_delay,negative
+I was promised delivery yesterday,report_delivery_delay,negative
+Expected it last week,report_delivery_delay,negative
+Way past the expected delivery date,report_delivery_delay,negative
+Been waiting too long,report_delivery_delay,negative
+Delivery is severely delayed,report_delivery_delay,negative
+This delay is ridiculous,report_delivery_delay,negative
+How much longer will I have to wait?,report_delivery_delay,negative
+The package was supposed to arrive days ago,report_delivery_delay,negative
+I want a refund,request_refund,negative
+Please cancel my order and refund me,request_refund,negative
+I need my money back,request_refund,negative
+Refund my order immediately,request_refund,negative
+I want to return this and get a refund,request_refund,negative
+Cancel my order I don't want it anymore,request_refund,negative
+Process my refund please,request_refund,negative
+I want a full refund,request_refund,negative
+Please refund this order,request_refund,negative
+Can I get my money back?,request_refund,negative
+I need a refund,request_refund,negative
+Refund please,request_refund,negative
+I want to cancel and get refunded,request_refund,negative
+Return and refund,request_refund,negative
+Full refund requested,request_refund,negative
+Please return my money,request_refund,negative
+I'm requesting a refund,request_refund,negative
+Refund this purchase,request_refund,negative
+Cancel order and refund,request_refund,negative
+I don't want this anymore refund me,request_refund,negative
+Get me my money back,request_refund,negative
+I want my payment back,request_refund,negative
+Issue a refund,request_refund,negative
+Please process a refund,request_refund,negative
+I'd like to request a refund,request_refund,negative
+Can you refund my order?,request_refund,negative
+Refund immediately,request_refund,negative
+I need a full refund for this,request_refund,negative
+Return this and give me my money back,request_refund,negative
+Refund my payment,request_refund,negative
+How do I request a refund?,request_refund,neutral
+Can I cancel my order?,request_refund,neutral
+What's your refund policy?,request_refund,neutral
+How do I get a refund?,request_refund,neutral
+Can I return this item?,request_refund,neutral
+What's the process for refunds?,request_refund,neutral
+How can I cancel my order?,request_refund,neutral
+Is it possible to get a refund?,request_refund,neutral
+Can I return my order?,request_refund,neutral
+What are the refund options?,request_refund,neutral
+How long does a refund take?,request_refund,neutral
+Refund process?,request_refund,neutral
+Can I still cancel?,request_refund,neutral
+Return policy?,request_refund,neutral
+Do you deliver on weekends?,other,neutral
+What are your business hours?,other,neutral
+How can I contact customer support?,other,neutral
+What payment methods do you accept?,other,neutral
+I need help,other,neutral
+Can you assist me?,other,neutral
+Hello,other,neutral
+Hi there,other,neutral
+Good morning,other,neutral
+Thanks,other,neutral
+Thank you,other,neutral
+Okay,other,neutral
+Yes,other,neutral
+No,other,neutral
+Got it,other,neutral
+Understood,other,neutral
+Alright,other,neutral
+What?,other,neutral
+Huh?,other,neutral
+I don't understand,other,neutral
+Can you repeat that?,other,neutral
+What did you say?,other,neutral
+I have a question,other,neutral
+Can you help me?,other,neutral
+I need assistance,other,neutral
+Support please,other,neutral
+Help me,other,neutral
+Customer service,other,neutral
+Talk to agent,other,neutral
+Human please,other,neutral
+I want to speak to a human,other,neutral
+Connect me to a person,other,neutral
+Let me talk to someone,other,neutral
+I need to speak with an agent,other,neutral
+Transfer me to customer service,other,neutral
+Can I talk to a real person?,other,neutral
+Get me a human agent,other,neutral
+I want to speak with someone,other,neutral
+Connect me to support,other,neutral
+Live agent please,other,neutral
+Do you have customer support?,other,neutral
+How can I reach support?,other,neutral
+What's your contact number?,other,neutral
+Email address?,other,neutral
+How to contact you?,other,neutral
+Support email?,other,neutral
+Phone number?,other,neutral
+Opening hours?,other,neutral
+Are you open today?,other,neutral
+What time do you close?,other,neutral
+Store hours?,other,neutral
+When are you available?,other,neutral
+Can I order now?,other,neutral
+Do you ship internationally?,other,neutral
+Shipping cost?,other,neutral
+Delivery charges?,other,neutral
+Free shipping?,other,neutral
+How much is delivery?,other,neutral
+What's the shipping fee?,other,neutral
+Do you offer free delivery?,other,neutral
+Shipping rates?,other,neutral
+International delivery?,other,neutral
+Do you ship to my country?,other,neutral
+Delivery options?,other,neutral
+Express shipping available?,other,neutral
+Same day delivery?,other,neutral
+Next day delivery?,other,neutral
+How fast can you deliver?,other,neutral
+Fastest delivery option?,other,neutral
+Payment options?,other,neutral
+Do you accept credit cards?,other,neutral
+Can I pay with PayPal?,other,neutral
+Cash on delivery?,other,neutral
+Do you take debit cards?,other,neutral
+Payment methods available?,other,neutral
+Can I pay by bank transfer?,other,neutral
+Do you accept Apple Pay?,other,neutral
+Google Pay accepted?,other,neutral
+What about cryptocurrency?,other,neutral
+Installment payment?,other,neutral
+Pay in installments?,other,neutral
+Can I pay later?,other,neutral
+Buy now pay later?,other,neutral
+Product information?,other,neutral
+Tell me about this product,other,neutral
+Product details?,other,neutral
+Is this in stock?,other,neutral
+When will it be available?,other,neutral
+Out of stock?,other,neutral
+Do you have this in different colors?,other,neutral
+Size availability?,other,neutral
+Different sizes?,other,neutral
+Colors available?,other,neutral
+Product specifications?,other,neutral
+What's this made of?,other,neutral
+Material?,other,neutral
+Ingredients?,other,neutral
+How to use this?,other,neutral
+Instructions?,other,neutral
+User manual?,other,neutral
+Warranty information?,other,neutral
+Do you offer warranty?,other,neutral
+Guarantee?,other,neutral
+Return window?,other,neutral
+How long to return?,other,neutral
+Exchange policy?,other,neutral
+Can I exchange this?,other,neutral
+Items missing from my order,report_order_content_issue,negative
+I received the wrong items,report_order_content_issue,negative
+My package arrived damaged,report_order_content_issue,negative
+Half of my order is missing,report_order_content_issue,negative
+The product I received is not what I ordered,report_order_content_issue,negative
+The items are broken and damaged,report_order_content_issue,negative
+Wrong product delivered,report_order_content_issue,negative
+Incorrect items in my package,report_order_content_issue,negative
+Missing items from delivery,report_order_content_issue,negative
+Received damaged goods,report_order_content_issue,negative
+Package contents are wrong,report_order_content_issue,negative
+This isn't what I ordered,report_order_content_issue,negative
+Items are defective,report_order_content_issue,negative
+Product is broken,report_order_content_issue,negative
+Wrong size delivered,report_order_content_issue,negative
+Wrong color sent,report_order_content_issue,negative
+Incomplete order,report_order_content_issue,negative
+Part of my order is missing,report_order_content_issue,negative
+Damaged package,report_order_content_issue,negative
+Broken items,report_order_content_issue,negative
+Wrong product sent,report_order_content_issue,negative
+Received incorrect items,report_order_content_issue,negative
+Not the right product,report_order_content_issue,negative
+Defective product received,report_order_content_issue,negative
+Items don't match order,report_order_content_issue,negative
+Package is incomplete,report_order_content_issue,negative
+Missing products,report_order_content_issue,negative
+Some items weren't delivered,report_order_content_issue,negative
+Package arrived broken,report_order_content_issue,negative
+Products are damaged,report_order_content_issue,negative
+Thank you! The delivery was excellent!,provide_feedback_on_service,positive
+Great service very happy with my order,provide_feedback_on_service,positive
+Amazing! Everything arrived perfectly,provide_feedback_on_service,positive
+I'm very satisfied with the delivery,provide_feedback_on_service,positive
+Excellent job thank you so much!,provide_feedback_on_service,positive
+Perfect delivery experience,provide_feedback_on_service,positive
+Outstanding service,provide_feedback_on_service,positive
+Very impressed with the service,provide_feedback_on_service,positive
+Fantastic delivery,provide_feedback_on_service,positive
+Really happy with everything,provide_feedback_on_service,positive
+Best delivery service ever,provide_feedback_on_service,positive
+Wonderful experience,provide_feedback_on_service,positive
+Superb service,provide_feedback_on_service,positive
+Excellent customer service,provide_feedback_on_service,positive
+Top notch delivery,provide_feedback_on_service,positive
+Very professional,provide_feedback_on_service,positive
+Great job team,provide_feedback_on_service,positive
+Highly satisfied,provide_feedback_on_service,positive
+Everything was perfect,provide_feedback_on_service,positive
+Couldn't be happier,provide_feedback_on_service,positive
+Terrible service very disappointed,provide_feedback_on_service,negative
+Worst delivery experience ever,provide_feedback_on_service,negative
+I'm extremely unhappy with this service,provide_feedback_on_service,negative
+Horrible customer service,provide_feedback_on_service,negative
+Very poor service,provide_feedback_on_service,negative
+Absolutely terrible,provide_feedback_on_service,negative
+Worst experience,provide_feedback_on_service,negative
+Completely dissatisfied,provide_feedback_on_service,negative
+Unacceptable service,provide_feedback_on_service,negative
+Really bad experience,provide_feedback_on_service,negative
+Very disappointing service,provide_feedback_on_service,negative
+Poor customer service,provide_feedback_on_service,negative
+Not happy at all,provide_feedback_on_service,negative
+Terrible experience,provide_feedback_on_service,negative
+Awful service,provide_feedback_on_service,negative
+This is unacceptable,provide_feedback_on_service,negative
+Very bad service,provide_feedback_on_service,negative
+Extremely poor,provide_feedback_on_service,negative
+Worst ever,provide_feedback_on_service,negative
+Never ordering again,provide_feedback_on_service,negative
+Good service,provide_feedback_on_service,positive
+Nice delivery,provide_feedback_on_service,positive
+Happy with service,provide_feedback_on_service,positive
+Satisfied,provide_feedback_on_service,positive
+Pretty good,provide_feedback_on_service,positive
+Decent service,provide_feedback_on_service,positive
+Okay service,provide_feedback_on_service,neutral
+Average delivery,provide_feedback_on_service,neutral
+Normal service,provide_feedback_on_service,neutral
+Standard delivery,provide_feedback_on_service,neutral
+It was fine,provide_feedback_on_service,neutral
+Acceptable,provide_feedback_on_service,neutral
+Track my order ORD123456,track_order,neutral
+Where is order ORD789012?,track_order,neutral
+Status of ORD345678,track_order,neutral
+Check order number ORD901234,track_order,neutral
+My order number is ORD567890,track_order,neutral
+Looking for order ORD234567,track_order,neutral
+I want to track order #12345,track_order,neutral
+Order ID: 98765,track_order,neutral
+Please find my order 11223,track_order,neutral
+Tracking number?,track_order,neutral
+What's my tracking ID?,track_order,neutral
+Can I get a tracking number?,track_order,neutral
+Send me tracking info,track_order,neutral
+Tracking link please,track_order,neutral
+I haven't received my order yet,track_order,negative
+Package not here,track_order,negative
+Order didn't arrive,track_order,negative
+Missing delivery,track_order,negative
+No package received,track_order,negative
+I want a refund for order ORD123,request_refund,negative
+Cancel order number ORD456,request_refund,negative
+Refund for ORD789 please,request_refund,negative
+Cancel this ORD321,request_refund,negative
+I need refund on order 654,request_refund,negative
+My delivery hasn't arrived in 2 weeks,report_delivery_delay,negative
+Order is 10 days late,report_delivery_delay,negative
+Still waiting after 3 weeks,report_delivery_delay,negative
+Package is 5 days overdue,report_delivery_delay,negative
+Expected it last Monday,report_delivery_delay,negative
+Should have arrived on the 5th,report_delivery_delay,negative
+Past the delivery window,report_delivery_delay,negative
+It's been over a month,report_delivery_delay,negative
+Two weeks and still nothing,report_delivery_delay,negative
+Waiting for 12 days now,report_delivery_delay,negative
+Order stuck somewhere,report_delivery_delay,negative
+Package hasn't moved in days,report_delivery_delay,negative
+Tracking shows no updates,report_delivery_delay,negative
+No movement on tracking,report_delivery_delay,negative
+Package stuck in transit,report_delivery_delay,negative
+Delivery stuck,report_delivery_delay,negative
+Not moving,report_delivery_delay,negative
+Seems stuck,report_delivery_delay,negative
+Package lost?,track_order,negative
+Is my package lost?,track_order,negative
+I think my order is lost,track_order,negative
+Lost package?,track_order,negative
+Missing package,track_order,negative
+Can't find my order,track_order,negative
+Order appears to be lost,track_order,negative
+Where did my package go?,track_order,negative
+Package disappeared,track_order,negative
+Lost in transit?,track_order,negative
+Received empty box,report_order_content_issue,negative
+Box was empty,report_order_content_issue,negative
+Nothing in the package,report_order_content_issue,negative
+Package came empty,report_order_content_issue,negative
+No items inside,report_order_content_issue,negative
+Only received 2 out of 5 items,report_order_content_issue,negative
+Missing 3 products,report_order_content_issue,negative
+Half the items missing,report_order_content_issue,negative
+Only got part of order,report_order_content_issue,negative
+Incomplete delivery,report_order_content_issue,negative
+Package was tampered with,report_order_content_issue,negative
+Box was opened,report_order_content_issue,negative
+Package looked used,report_order_content_issue,negative
+Seal was broken,report_order_content_issue,negative
+Tampered package,report_order_content_issue,negative
+Item is expired,report_order_content_issue,negative
+Product is past expiry date,report_order_content_issue,negative
+Received expired goods,report_order_content_issue,negative
+Expiry date has passed,report_order_content_issue,negative
+This is expired,report_order_content_issue,negative
+I ordered blue but got red,report_order_content_issue,negative
+Wrong color,report_order_content_issue,negative
+Ordered large got small,report_order_content_issue,negative
+Wrong size sent,report_order_content_issue,negative
+Not the right variant,report_order_content_issue,negative
+Got the 32GB instead of 64GB,report_order_content_issue,negative
+Wrong model,report_order_content_issue,negative
+Different product altogether,report_order_content_issue,negative
+This is a completely different item,report_order_content_issue,negative
+Not even close to what I ordered,report_order_content_issue,negative
+Screen is cracked,report_order_content_issue,negative
+Product won't turn on,report_order_content_issue,negative
+Doesn't work,report_order_content_issue,negative
+Defective item,report_order_content_issue,negative
+Broken on arrival,report_order_content_issue,negative
+Item is faulty,report_order_content_issue,negative
+Not working properly,report_order_content_issue,negative
+Malfunctioning product,report_order_content_issue,negative
+Product has a defect,report_order_content_issue,negative
+Quality is terrible,report_order_content_issue,negative
+Poor quality,report_order_content_issue,negative
+Low quality product,report_order_content_issue,negative
+Cheaply made,report_order_content_issue,negative
+Bad quality,report_order_content_issue,negative
+Product quality is poor,report_order_content_issue,negative
+Fast delivery loved it,provide_feedback_on_service,positive
+Arrived early thanks!,provide_feedback_on_service,positive
+Quick shipping,provide_feedback_on_service,positive
+Came faster than expected,provide_feedback_on_service,positive
+Super fast delivery,provide_feedback_on_service,positive
+Delivery was very quick,provide_feedback_on_service,positive
+Impressed by the speed,provide_feedback_on_service,positive
+Arrived ahead of schedule,provide_feedback_on_service,positive
+Lightning fast delivery,provide_feedback_on_service,positive
+Got it sooner than expected,provide_feedback_on_service,positive
+Delivery guy was very polite,provide_feedback_on_service,positive
+Nice delivery person,provide_feedback_on_service,positive
+Friendly driver,provide_feedback_on_service,positive
+Very professional delivery,provide_feedback_on_service,positive
+Courteous delivery agent,provide_feedback_on_service,positive
+Helpful delivery person,provide_feedback_on_service,positive
+Rude delivery person,provide_feedback_on_service,negative
+Driver was unprofessional,provide_feedback_on_service,negative
+Delivery guy was rude,provide_feedback_on_service,negative
+Very rude staff,provide_feedback_on_service,negative
+Unprofessional delivery,provide_feedback_on_service,negative
+Bad attitude from driver,provide_feedback_on_service,negative
+Package well packaged,provide_feedback_on_service,positive
+Great packaging,provide_feedback_on_service,positive
+Items packed carefully,provide_feedback_on_service,positive
+Well protected,provide_feedback_on_service,positive
+Excellent packaging,provide_feedback_on_service,positive
+Securely packed,provide_feedback_on_service,positive
+Poor packaging,provide_feedback_on_service,negative
+Bad packaging,provide_feedback_on_service,negative
+Items not protected,provide_feedback_on_service,negative
+Packaging was terrible,provide_feedback_on_service,negative
+Not packed properly,provide_feedback_on_service,negative
+Sloppy packaging,provide_feedback_on_service,negative
+Will order again,provide_feedback_on_service,positive
+Definitely ordering more,provide_feedback_on_service,positive
+Happy customer here,provide_feedback_on_service,positive
+Recommended,provide_feedback_on_service,positive
+Five stars,provide_feedback_on_service,positive
+10/10,provide_feedback_on_service,positive
+Highly recommend,provide_feedback_on_service,positive
+Would buy again,provide_feedback_on_service,positive
+Great experience overall,provide_feedback_on_service,positive
+Very pleased,provide_feedback_on_service,positive
+Never buying again,provide_feedback_on_service,negative
+Won't recommend,provide_feedback_on_service,negative
+Do not order from here,provide_feedback_on_service,negative
+Worst company,provide_feedback_on_service,negative
+Avoid this place,provide_feedback_on_service,negative
+Not recommended,provide_feedback_on_service,negative
+One star,provide_feedback_on_service,negative
+0/10,provide_feedback_on_service,negative
+Waste of money,provide_feedback_on_service,negative
+Regret this purchase,provide_feedback_on_service,negative

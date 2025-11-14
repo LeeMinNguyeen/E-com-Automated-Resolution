@@ -9,7 +9,9 @@ from api.llm.conversation_context import get_conversation_context
 from api.mcp_client.client import (
     smart_triage_sync,
     query_order_sync,
-    process_refund_sync
+    check_refund_eligibility_sync,
+    process_refund_sync,
+    request_human_intervention_sync
 )
 
 # configure module logger
@@ -53,7 +55,7 @@ def generate_response(user_id: str, message: str):
     2. If needed, run NLU analysis; otherwise use cached result
     3. Pass message + NLU results to LLM
     4. LLM decides what to do based on intent
-    5. LLM can call additional tools (query DB, process refund, re-analyze intent)
+    5. LLM can call additional tools (query DB, process refund, re-analyze intent,...)
     6. Return the final response
     """
     try:
@@ -87,10 +89,23 @@ def generate_response(user_id: str, message: str):
         
         # STEP 2: Define the available tools that the LLM can call
         # Note: LLM can still call smart_triage_nlu if user changes topic or new request
+        
+        # Create a wrapper for request_human_intervention that auto-injects user_id
+        def request_human_intervention_wrapper(reason: str, last_message: str, priority: str = "medium"):
+            """Wrapper that automatically injects the current user_id"""
+            return request_human_intervention_sync(
+                user_id=user_id,  # Auto-inject the actual user_id
+                reason=reason,
+                last_message=last_message,
+                priority=priority
+            )
+        
         available_tools = {
             "smart_triage_nlu": smart_triage_sync,
             "query_order_database": query_order_sync,
-            "process_refund": process_refund_sync
+            "check_refund_eligibility": check_refund_eligibility_sync,
+            "process_refund": process_refund_sync,
+            "request_human_intervention": request_human_intervention_wrapper  # Use wrapper
         }
         
         # STEP 3: Call the LLM with message, NLU results, and tools

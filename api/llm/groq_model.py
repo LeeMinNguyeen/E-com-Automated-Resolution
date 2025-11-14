@@ -64,6 +64,27 @@ USE THE NLU RESULTS to guide your response strategy!
 
 ---
 
+## WHEN TO ESCALATE TO HUMAN AGENT (request_human_intervention):
+
+Use request_human_intervention when:
+1. **Customer explicitly asks**: "I want to speak to a human", "Can I talk to someone?", "I need a real person"
+2. **Very negative sentiment** (>90% confidence) with complex issues: Customer is extremely frustrated and issue requires careful handling
+3. **Cannot resolve with available tools**: Issue is outside your capability (e.g., account security, legal matters, custom requests)
+4. **Complex disputes**: Refund disputes, damaged items requiring investigation, missing orders with delivery confirmation
+5. **Repeated failures**: You've tried to help but couldn't resolve after 2-3 attempts
+6. **Manual investigation needed**: Issues requiring access to systems you don't have
+
+When escalating, set priority:
+- **high**: Very frustrated customers (negative sentiment >90%), urgent issues, repeated failures
+- **medium**: Standard complex issues, explicit human requests
+- **low**: General inquiries that need human expertise but aren't urgent
+
+After calling request_human_intervention:
+- Inform the customer: "I've escalated this to our support team. A human agent will reach out to you shortly to assist with [issue]. Is there anything else I can help with in the meantime?"
+- Be empathetic and reassuring
+
+---
+
 ## WHEN TO RE-ANALYZE WITH smart_triage_nlu:
 
 You already have NLU results for the current message. Only call smart_triage_nlu again if:
@@ -94,10 +115,12 @@ Do NOT call smart_triage_nlu for the initial message - you already have the resu
 2. Look up order details
 3. Acknowledge the issue with empathy (especially if negative sentiment)
 4. Offer solution (refund, replacement, etc.)
+5. If requires physical inspection/investigation → Escalate to human
 
 **general_inquiry / other**:
 - Answer the question directly if you can
 - If unclear, ask for clarification
+- If outside your knowledge → Escalate to human
 
 ---
 
@@ -109,6 +132,7 @@ Do NOT call smart_triage_nlu for the initial message - you already have the resu
 4. **Extract Order IDs automatically**: Pattern is ORD + 6 digits (e.g., ORD000001)
 5. **Be concise**: You're on WhatsApp, keep it brief
 6. **Empathy for negative sentiment**: "I understand this is frustrating..."
+7. **Escalate when necessary**: Don't struggle - get human help when needed. Always escalate to human agents when asked.
 
 ---
 
@@ -129,15 +153,26 @@ Do NOT call smart_triage_nlu for the initial message - you already have the resu
 - NLU: intent="report_delivery_delay" (92%), sentiment="negative" (98%)
 - Response: "I sincerely apologize for the delay. I understand how frustrating this must be. Could you please share your Order ID so I can look into this immediately?"
 
-**Example 4: Refund request**
+**Example 4: Refund request - COMPLETE WORKFLOW**
 - User: "I want a refund for ORD000003"
 - NLU: intent="request_refund" (96%), sentiment="negative"
-- Action: query_order_database("ORD000003") → Get details
-- Response: "I found your order for ₹599 (Beverages). I see it was delivered late. Would you like me to process a full refund of ₹599?"
-- User: "Yes"
-- Action: process_refund("ORD000003", 599, "Late delivery - customer request")
+- STEP 1: Check eligibility with check_refund_eligibility("ORD000003")
+- If ELIGIBLE → Response: "I found your order for Personal Care (₹1,651). After deducting the 5% shipping fee (₹82.55), you will receive ₹1,568.45 as refund. Would you like to proceed?"
+- If NOT ELIGIBLE (Food & Beverage) → Response: "I'm sorry, but we cannot process refunds for Beverages items due to health and safety policies. Is there another way I can help you with this order?"
+- STEP 2: If customer confirms ("Yes", "OK", "Proceed") → process_refund("ORD000003", 1568.45, "Customer request")
+- STEP 3: Provide confirmation with transaction ID
 
-**Example 5: Topic switch - ONLY time to re-analyze**
+**Example 5: Escalation - Explicit request**
+- User: "I need to speak with a human agent"
+- Action: request_human_intervention(reason="Customer explicitly requested human agent", last_message="I need to speak with a human agent", priority="medium")
+- Response: "I've escalated this to our support team. A human agent will reach out to you shortly. Is there anything else I can help with in the meantime?"
+
+**Example 6: Escalation - Very frustrated customer**
+- User: "This is absolutely unacceptable! I've been waiting for 2 weeks and no one has helped me!"
+- Action: request_human_intervention(reason="Highly frustrated customer with prolonged unresolved issue", last_message="This is absolutely unacceptable! I've been waiting for 2 weeks and no one has helped me!", priority="high")
+- Response: "I'm truly sorry for the frustration and inconvenience you've experienced. This is not acceptable. I've immediately escalated your case to our senior support team with high priority. A human agent will contact you within the next few hours to resolve this. Could you please share your Order ID so I can provide them with all the details?"
+
+**Example 7: Topic switch - ONLY time to re-analyze**
 - Previous: Discussing ORD000001
 - User: "Actually, I also need to check on a different order - it hasn't arrived yet"
 - Action: Call smart_triage_nlu("Actually, I also need to check on a different order - it hasn't arrived yet")
@@ -145,7 +180,35 @@ Do NOT call smart_triage_nlu for the initial message - you already have the resu
 
 ---
 
-Remember: You ALREADY have NLU analysis for the current message. Use it wisely to provide excellent customer service!"""
+## REFUND WORKFLOW - CRITICAL:
+
+**ALWAYS follow this 3-step process for refunds:**
+
+1. **Check Eligibility**: Call check_refund_eligibility(order_id)
+   - This checks if the product category allows refunds
+   - Automatically calculates refund amount (original price - 5% shipping fee)
+   - Food & Beverage items (Beverages, Snacks, Dairy, Fruits & Vegetables, Grocery) CANNOT be refunded
+
+2. **Confirm with Customer**: 
+   - If ELIGIBLE: Present the refund amount and ask for confirmation
+     - "Your order for [category] (₹[original]) is eligible for refund. After deducting the 5% shipping fee (₹[fee]), you will receive ₹[refund_amount]. Would you like to proceed?"
+   - If NOT ELIGIBLE: Politely decline and offer alternative assistance
+     - "I'm sorry, but we cannot process refunds for [category] items due to health and safety policies. Is there another way I can help you with this order?"
+
+3. **Process Refund**: ONLY if customer confirms
+   - Call process_refund(order_id, refund_amount, reason)
+   - Provide transaction ID and timeline
+   - "Refund processed successfully! ₹[amount] will be credited to your account within 5-7 business days. Transaction ID: [id]"
+
+**NEVER:**
+- Process refund without checking eligibility first
+- Process refund for Food & Beverage items
+- Calculate refund amount manually (use check_refund_eligibility)
+- Process refund without customer confirmation
+
+---
+
+Remember: You ALREADY have NLU analysis for the current message. Use it wisely to provide excellent customer service! When in doubt or facing complex issues, don't hesitate to escalate to human agents."""
 
 
 # Define the tools available to the LLM
@@ -187,8 +250,25 @@ tools = [
     {
         "type": "function",
         "function": {
+            "name": "check_refund_eligibility",
+            "description": "STEP 1 of refund process: Check if an order is eligible for refund based on product category and calculate the refund amount. Food & Beverage items (Beverages, Snacks, Dairy, Fruits & Vegetables, Grocery) CANNOT be refunded. For eligible items, automatically calculates refund amount by subtracting 5% shipping fee from order value. ALWAYS call this BEFORE process_refund.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "order_id": {
+                        "type": "string",
+                        "description": "The Order ID to check for refund eligibility (e.g., 'ORD000001')"
+                    }
+                },
+                "required": ["order_id"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
             "name": "process_refund",
-            "description": "Process a refund for a customer's order. This should only be called when the customer explicitly requests a refund or cancellation, and you have confirmed the order details WITH THE CUSTOMER first.",
+            "description": "STEP 3 of refund process: Process a refund and update the database to mark the order as refunded. ONLY call this after: 1) check_refund_eligibility confirms eligibility, 2) Customer explicitly confirms they want to proceed. This updates the order status in the database and generates a transaction ID.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -198,14 +278,40 @@ tools = [
                     },
                     "amount": {
                         "type": "number",
-                        "description": "The refund amount in INR"
+                        "description": "The refund amount in INR (use the amount from check_refund_eligibility)"
                     },
                     "reason": {
                         "type": "string",
-                        "description": "The reason for the refund (e.g., 'Items missing', 'Late delivery', 'Customer request')"
+                        "description": "The reason for the refund (e.g., 'Items missing', 'Late delivery', 'Customer request', 'Damaged product')"
                     }
                 },
                 "required": ["order_id", "amount", "reason"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "request_human_intervention",
+            "description": "Escalate the conversation to a human customer support agent when: 1) The request is too complex for automated handling, 2) Customer explicitly asks to speak with a human, 3) The issue requires manual investigation, 4) You cannot resolve the issue with available tools, 5) Customer is very frustrated (highly negative sentiment) and needs human attention. The user_id is automatically injected, you only need to provide reason, last_message, and priority.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "reason": {
+                        "type": "string",
+                        "description": "Detailed reason for escalation (e.g., 'Complex refund dispute', 'Customer requests human agent', 'Issue outside automation scope')"
+                    },
+                    "last_message": {
+                        "type": "string",
+                        "description": "The customer's last message that triggered the escalation"
+                    },
+                    "priority": {
+                        "type": "string",
+                        "enum": ["low", "medium", "high"],
+                        "description": "Priority level - 'high' for very frustrated customers or urgent issues, 'medium' for standard escalations, 'low' for general inquiries"
+                    }
+                },
+                "required": ["reason", "last_message"]
             }
         }
     }

@@ -1,0 +1,46 @@
+text,intent_label,sentiment_label,predicted_intent,predicted_sentiment,intent_confidence,sentiment_confidence
+Where is my order?,track_order,neutral,track_order,neutral,0.9923,0.9926
+Can you check my order status?,track_order,neutral,track_order,neutral,0.9639,0.9986
+I need to track my package,track_order,neutral,track_order,neutral,0.995,0.9839
+What's the status of my delivery?,track_order,neutral,track_order,neutral,0.9917,0.9901
+When will my order arrive?,track_order,neutral,track_order,neutral,0.9757,0.9856
+Where is my order? It should have arrived by now,track_order,negative,track_order,negative,0.9804,0.9599
+"My package still hasn't arrived, what's happening?",track_order,negative,track_order,neutral,0.9857,0.5317
+My order is very late,report_delivery_delay,negative,report_delivery_delay,negative,0.9855,0.9961
+The delivery is delayed and I'm frustrated,report_delivery_delay,negative,report_delivery_delay,negative,0.9825,0.9985
+Why hasn't my package arrived yet? It's been a week!,report_delivery_delay,negative,report_delivery_delay,negative,0.9907,0.9961
+"This is taking way too long, where is my order?",report_delivery_delay,negative,report_delivery_delay,negative,0.9877,0.9966
+I'm very upset about the late delivery,report_delivery_delay,negative,report_delivery_delay,negative,0.9822,0.9978
+Extremely disappointed with the delivery time,report_delivery_delay,negative,report_delivery_delay,negative,0.9859,0.9973
+Items are missing from my order,report_order_content_issue,negative,report_order_content_issue,negative,0.9999,1.0
+I received the wrong items,report_order_content_issue,negative,report_order_content_issue,negative,0.9997,1.0
+My package arrived damaged,report_order_content_issue,negative,report_order_content_issue,negative,0.9996,1.0
+Half of my order is missing,report_order_content_issue,negative,report_order_content_issue,negative,0.9993,1.0
+The product I received is not what I ordered,report_order_content_issue,negative,report_order_content_issue,negative,0.9998,1.0
+The items are broken and damaged,report_order_content_issue,negative,report_order_content_issue,negative,0.9998,1.0
+I want a refund,request_refund,negative,request_refund,negative,0.9903,0.9833
+Please cancel my order and refund me,request_refund,negative,request_refund,negative,0.9903,0.9915
+I need my money back,request_refund,negative,report_order_content_issue,negative,0.84,0.5795
+Refund my order immediately,request_refund,negative,request_refund,negative,0.9883,0.9932
+I want to return this and get a refund,request_refund,negative,request_refund,negative,0.9903,0.9862
+"Cancel my order, I don't want it anymore",request_refund,negative,request_refund,negative,0.9854,0.9908
+How do I request a refund?,request_refund,neutral,report_order_content_issue,neutral,0.9316,0.9886
+Can I cancel my order?,request_refund,neutral,request_refund,neutral,0.9854,0.8432
+Thank you! The delivery was excellent!,provide_feedback_on_service,positive,provide_feedback_on_service,positive,0.9999,0.9998
+"Great service, very happy with my order",provide_feedback_on_service,positive,provide_feedback_on_service,positive,1.0,0.9999
+Amazing! Everything arrived perfectly,provide_feedback_on_service,positive,provide_feedback_on_service,positive,0.9998,1.0
+I'm very satisfied with the delivery,provide_feedback_on_service,positive,provide_feedback_on_service,positive,1.0,0.9999
+"Excellent job, thank you so much!",provide_feedback_on_service,positive,generic_unspecified_feedback,positive,0.7807,1.0
+"Terrible service, very disappointed",provide_feedback_on_service,negative,provide_feedback_on_service,negative,0.9657,0.9995
+Worst delivery experience ever,provide_feedback_on_service,negative,provide_feedback_on_service,negative,0.9968,0.9945
+I'm extremely unhappy with this service,provide_feedback_on_service,negative,provide_feedback_on_service,negative,0.9632,0.9992
+Do you deliver on weekends?,other,neutral,other,neutral,0.9966,0.9984
+What are your business hours?,other,neutral,other,neutral,0.9924,0.9993
+How can I contact customer support?,other,neutral,other,neutral,0.9959,0.9991
+What payment methods do you accept?,other,neutral,other,neutral,0.9961,0.9992
+I need help,other,neutral,other,neutral,0.9628,0.9998
+Can you assist me?,other,neutral,other,neutral,0.9963,0.9989
+Hello,other,neutral,other,neutral,0.9961,0.9989
+This is absolutely unacceptable! Worst service ever!,provide_feedback_on_service,negative,provide_feedback_on_service,negative,0.9971,0.9954
+I'm furious! My order never arrived and nobody is helping!,report_delivery_delay,negative,track_order,negative,0.5891,0.9988
+This is a complete disaster! Everything is wrong!,report_order_content_issue,negative,provide_feedback_on_service,negative,0.9804,0.9983

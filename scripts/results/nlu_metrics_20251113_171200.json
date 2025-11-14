@@ -1,0 +1,95 @@
+{
+  "intent_classification": {
+    "accuracy": 0.8888888888888888,
+    "balanced_accuracy": 0.8921957671957671,
+    "precision_weighted": 0.9194444444444444,
+    "recall_weighted": 0.8888888888888888,
+    "f1_weighted": 0.8989336589336588,
+    "precision_macro": 0.9189814814814815,
+    "recall_macro": 0.8921957671957671,
+    "f1_macro": 0.9004070004070003,
+    "per_class_metrics": {
+      "other": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0
+      },
+      "provide_feedback_on_service": {
+        "precision": 0.8888888888888888,
+        "recall": 0.8888888888888888,
+        "f1_score": 0.8888888888888888
+      },
+      "report_delivery_delay": {
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1_score": 0.9230769230769231
+      },
+      "report_order_content_issue": {
+        "precision": 0.75,
+        "recall": 0.8571428571428571,
+        "f1_score": 0.8
+      },
+      "request_refund": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1_score": 0.8571428571428571
+      },
+      "track_order": {
+        "precision": 0.875,
+        "recall": 1.0,
+        "f1_score": 0.9333333333333333
+      }
+    }
+  },
+  "sentiment_classification": {
+    "accuracy": 0.9777777777777777,
+    "balanced_accuracy": 0.9871794871794872,
+    "precision_weighted": 0.9792592592592592,
+    "recall_weighted": 0.9777777777777777,
+    "f1_weighted": 0.9779430546164826,
+    "precision_macro": 0.9777777777777779,
+    "recall_macro": 0.9871794871794872,
+    "f1_macro": 0.9819697994140185,
+    "per_class_metrics": {
+      "negative": {
+        "precision": 1.0,
+        "recall": 0.9615384615384616,
+        "f1_score": 0.9803921568627451
+      },
+      "neutral": {
+        "precision": 0.9333333333333333,
+        "recall": 1.0,
+        "f1_score": 0.9655172413793104
+      },
+      "positive": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0
+      }
+    }
+  },
+  "confidence_scores": {
+    "intent_confidence": {
+      "mean": 0.9712844444444446,
+      "std": 0.06980975084886243,
+      "min": 0.5891,
+      "max": 1.0,
+      "median": 0.9903,
+      "high_confidence_pct": 95.55555555555556
+    },
+    "sentiment_confidence": {
+      "mean": 0.9724444444444444,
+      "std": 0.09305843219434302,
+      "min": 0.5317,
+      "max": 1.0,
+      "median": 0.9984,
+      "high_confidence_pct": 95.55555555555556
+    }
+  },
+  "test_info": {
+    "timestamp": "20251113_171200",
+    "num_samples": 45,
+    "num_intents": 6,
+    "num_sentiments": 3
+  }
+}

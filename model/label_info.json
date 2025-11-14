@@ -4,7 +4,12 @@
         "report_order_content_issue": 1,
         "generic_unspecified_feedback": 2,
         "comment_on_platform_experience": 3,
-        "comment_on_product_quality": 4
+        "comment_on_product_quality": 4,
+        "manage_order": 5,
+        "track_order": 6,
+        "report_delivery_delay": 7,
+        "request_refund": 8,
+        "other": 9
     },
     "sentiment_labels": {
         "positive": 0,

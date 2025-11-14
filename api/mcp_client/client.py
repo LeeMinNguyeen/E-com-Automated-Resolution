@@ -154,6 +154,18 @@ class MCPClient:
         """
         return await self.call_tool("query_order_database", {"order_id": order_id})
     
+    async def check_refund_eligibility(self, order_id: str) -> Dict[str, Any]:
+        """
+        Check if an order is eligible for refund and calculate refund amount.
+        
+        Args:
+            order_id: The order ID to check
+            
+        Returns:
+            Dictionary with eligibility status, refund amount, and reason
+        """
+        return await self.call_tool("check_refund_eligibility", {"order_id": order_id})
+    
     async def process_refund(self, order_id: str, amount: float, reason: str) -> Dict[str, Any]:
         """
         Process a refund for an order.
@@ -170,6 +182,32 @@ class MCPClient:
             "order_id": order_id,
             "amount": amount,
             "reason": reason
+        })
+    
+    async def request_human_intervention(
+        self, 
+        user_id: str, 
+        reason: str, 
+        last_message: str,
+        priority: str = "medium"
+    ) -> Dict[str, Any]:
+        """
+        Request human intervention for a conversation.
+        
+        Args:
+            user_id: The user ID who needs assistance
+            reason: Reason for human intervention
+            last_message: The last message from the user
+            priority: Priority level (low, medium, high)
+            
+        Returns:
+            Dictionary with alert status
+        """
+        return await self.call_tool("request_human_intervention", {
+            "user_id": user_id,
+            "reason": reason,
+            "last_message": last_message,
+            "priority": priority
         })
 
 
@@ -242,6 +280,21 @@ async def close_mcp_client():
     _loop_thread = None
 
 
+async def reset_mcp_client():
+    """Reset the global MCP client by closing and clearing it."""
+    global _mcp_client
+    
+    if _mcp_client is not None:
+        try:
+            await _mcp_client.disconnect()
+        except Exception:
+            pass  # Ignore errors during cleanup
+        _mcp_client = None
+    
+    # Don't reset the event loop, just the client
+    # This allows us to create a fresh client connection
+
+
 # Synchronous wrapper functions for easier use in non-async code
 def call_mcp_tool_sync(tool_name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -277,6 +330,11 @@ def query_order_sync(order_id: str) -> Dict[str, Any]:
     return call_mcp_tool_sync("query_order_database", {"order_id": order_id})
 
 
+def check_refund_eligibility_sync(order_id: str) -> Dict[str, Any]:
+    """Synchronous wrapper for check_refund_eligibility."""
+    return call_mcp_tool_sync("check_refund_eligibility", {"order_id": order_id})
+
+
 def process_refund_sync(order_id: str, amount: float, reason: str) -> Dict[str, Any]:
     """Synchronous wrapper for process_refund."""
     return call_mcp_tool_sync("process_refund", {
@@ -284,6 +342,31 @@ def process_refund_sync(order_id: str, amount: float, reason: str) -> Dict[str, 
         "amount": amount,
         "reason": reason
     })
+
+
+def request_human_intervention_sync(
+    user_id: str, 
+    reason: str, 
+    last_message: str,
+    priority: str = "medium"
+) -> Dict[str, Any]:
+    """Synchronous wrapper for request_human_intervention."""
+    return call_mcp_tool_sync("request_human_intervention", {
+        "user_id": user_id,
+        "reason": reason,
+        "last_message": last_message,
+        "priority": priority
+    })
+
+
+def reset_mcp_client_sync():
+    """Synchronous wrapper to reset the MCP client."""
+    async def _reset():
+        await reset_mcp_client()
+    
+    loop = _get_event_loop()
+    future = asyncio.run_coroutine_threadsafe(_reset(), loop)
+    return future.result(timeout=5)
 
 
 if __name__ == "__main__":
@@ -301,9 +384,18 @@ if __name__ == "__main__":
         result = await client.query_order_database("ORD000001")
         print(json.dumps(result, indent=2))
         
+        # Test refund eligibility check
+        print("\n=== Testing Refund Eligibility (Personal Care - Eligible) ===")
+        result = await client.check_refund_eligibility("ORD000001")
+        print(json.dumps(result, indent=2))
+        
+        print("\n=== Testing Refund Eligibility (Beverages - Not Eligible) ===")
+        result = await client.check_refund_eligibility("ORD000003")
+        print(json.dumps(result, indent=2))
+        
         # Test refund processing
         print("\n=== Testing Refund Processing ===")
-        result = await client.process_refund("ORD000003", 599, "Items missing from order")
+        result = await client.process_refund("ORD000001", 362.9, "Customer request")
         print(json.dumps(result, indent=2))
         
         await close_mcp_client()
