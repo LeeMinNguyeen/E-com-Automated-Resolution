@@ -150,7 +150,7 @@ Model and data loaded successfully. Initializing MCP server...
 #### 2. Start the WhatsApp Bot (in another terminal)
 
 ```bash
-python api/main.py
+uvicorn api.main:app --reload
 ```
 
 The bot will start on `http://localhost:8000`
@@ -177,7 +177,7 @@ pip install -r requirements.txt
 #### 2. Start the Dashboard
 
 ```bash
-streamlit run app.py
+streamlit run dashboard/app.py
 ```
 
 The dashboard will open in your browser at `http://localhost:8501`
