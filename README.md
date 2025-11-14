@@ -9,11 +9,10 @@ This project implements an end-to-end AI-powered customer service agent that han
 ### Key Features
 
 - 🤖 **Conversational AI**: Natural language interactions powered by Groq's Kimi-K2 LLM
-- 🎯 **Smart NLU Triage**: Multi-task DistilBERT model for intent classification and sentiment analysis (90%+ accuracy)
+- 🎯 **Smart NLU Triage**: Multi-task DistilBERT model for intent classification and sentiment analysis (97.78%+ accuracy)
 - ⚡ **Optimized Resource Usage**: NLU runs only on first message or after 24h gap (cached otherwise)
 - 💬 **WhatsApp Integration**: Native integration with WhatsApp Business API using PyWa
 - 🔧 **MCP Tool Orchestration**: Model Context Protocol for seamless AI-tool integration
-- 🗄️ **Real-time Database**: MongoDB for order data and chat history
 - 🧠 **Context Awareness**: Maintains conversation context and tracks user information
 - 💰 **Smart Refund Processing**: Intelligent refund handling with automatic order lookup and confirmation
 - 🔍 **Auto Order ID Detection**: Automatic extraction of order IDs from messages (pattern: ORD000001)
@@ -596,19 +595,9 @@ Send messages to your WhatsApp Business number:
 
 ## 📊 Performance Metrics
 
-- **NLU Model Accuracy**: ~90%+ on test set
-- **Intent Classification**: F1-score > 0.88
-- **Sentiment Analysis**: F1-score > 0.85
-- **Response Time**: <2 seconds (with GPU)
-- **Tool Call Success Rate**: ~95%
-
-
-## 🙏 Acknowledgments
-
-- **Groq** for providing fast LLM inference
-- **Anthropic** for the Model Context Protocol (MCP)
-- **Hugging Face** for Transformers library
-- **PyWa** for WhatsApp integration
-- **MongoDB** for database services
-
----
+- Intent Accuracy:          88.89%
+- Intent F1-Score:          0.8989
+- Sentiment Accuracy:       97.78%
+- Sentiment F1-Score:       0.9779
+- Avg Intent Confidence:    0.9713
+- Avg Sentiment Confidence: 0.9724
